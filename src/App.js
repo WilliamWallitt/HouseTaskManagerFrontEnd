@@ -66,8 +66,6 @@ function App() {
                                          updateNextPage={updateNextPage}
               />
             }) : <h1>Loading users...</h1>}
-            {/*<UserImageComponent name="William" image={willsImage} updateUser={updateUser} updateNextPage={updateNextPage}/>*/}
-            {/*<UserImageComponent name="Madling" image={madsImage}  updateUser={updateUser} updateNextPage={updateNextPage}/>*/}
           </Row>
         </Container>
       </header>
