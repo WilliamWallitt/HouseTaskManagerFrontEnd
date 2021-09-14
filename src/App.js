@@ -2,14 +2,16 @@ import logo from './logo.svg';
 import './App.css';
 import madsImage from "./images/madsbeingacunt.jpg"
 import willsImage from "./images/williscool.jpg"
-import {Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import UserImageComponent from "./Components/userImageComponent";
 import React, {useEffect} from "react";
 import TasksPageComponent from "./Components/tasksPageComponent";
+import LoggerComponent from "./Components/Logs/LoggerComponent";
 
 function App() {
 
   const [nextPage, updateNextPage] = React.useState(false)
+  const [showLogPage, updateShowLogPage] = React.useState(false)
   const [userData, updateUserData] = React.useState({})
   const [clickedUser, updateClickedUser] = React.useState({})
 
@@ -24,9 +26,17 @@ function App() {
 
 
   return (
+
+      !showLogPage ?
+
       !nextPage ?
     <div className="App">
       <header className="App-header">
+
+
+        <Button variant="outline-light" onClick={() => updateShowLogPage(true)} style={{top: "25px", left: "25px", position: "fixed"}}>View logs</Button>
+
+
         <p className="my-5">
           Welcome to <code>HouseTask.js</code> try not to have too much fun!
         </p>
@@ -38,9 +48,12 @@ function App() {
         >
         </a>
         <Container className="text-center">
-          <p className="bg-white w-50 mx-auto my-5 p-3 rounded-3" style={{color: "#282c34"}}>
-            <code>[Select user]</code>
-          </p>
+          <Row>
+            <p className="bg-white w-50 mx-auto my-3 p-3 rounded-3" style={{color: "#282c34"}}>
+              <code>[Select user]</code>
+            </p>
+          </Row>
+
           <p className="h1 mx-auto my-5 p-2">
             &#8595;
           </p>
@@ -59,7 +72,7 @@ function App() {
         </Container>
       </header>
     </div> : <TasksPageComponent name={clickedUser.userName} authorization={clickedUser.authorization} updateNextPage={updateNextPage} userId={clickedUser._id} />
-  );
+  : <LoggerComponent updateShowLogPage={updateShowLogPage}/>);
 }
 
 export default App;

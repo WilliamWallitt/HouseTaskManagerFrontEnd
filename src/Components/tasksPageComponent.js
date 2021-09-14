@@ -4,26 +4,28 @@ import TaskComponent from "./taskComponent";
 import TaskEditComponent from "./taskEditComponent";
 
 export default function TasksPageComponent(props) {
-    const [name, updateName] = React.useState(props.name)
     const [taskData, updateTaskData] = React.useState({})
     const [editTask, updateEditTask] = React.useState(false)
     const [editTaskData, updateEditTaskData] = React.useState({})
     const [newTask, updateNewTask] = React.useState({name: "", description: "", point: ""})
-
-    useEffect(() => {
-
-        taskReq().then(_ => console.log("req made"))
-
-    })
+    const [addedANewTask, updateAddedANewTask] = React.useState(false)
 
     const taskReq = async () => {
 
         const data = await fetch("http://localhost:3000/tasks").then(res => res.json()).then(data => data).catch(err => err)
         // updateTaskData(data)
-        if (JSON.stringify(taskData) === JSON.stringify({})) {
+        if (JSON.stringify(taskData) === JSON.stringify({}) || addedANewTask) {
+            updateAddedANewTask(false)
             updateTaskData(data)
         }
     }
+
+    useEffect(() => {
+
+        taskReq().then(_ => console.log("req made"))
+
+    }, [taskReq])
+
 
 
     function addTaskHandler(key, event) {
@@ -34,7 +36,9 @@ export default function TasksPageComponent(props) {
 
     async function addTaskSubmitHandler() {
 
-        const result = await fetch("http://localhost:3000/tasks", {
+        Object.keys(newTask).map(k => newTask[k] === null || newTask[k] === undefined ? newTask[k] = "" : newTask[k])
+
+        const _ = await fetch("http://localhost:3000/tasks", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -43,10 +47,7 @@ export default function TasksPageComponent(props) {
 
             body: JSON.stringify(newTask)
         })
-
-        console.log(result)
-
-
+        updateAddedANewTask(true)
     }
 
     return (
@@ -56,7 +57,7 @@ export default function TasksPageComponent(props) {
         <div className="App">
             <header className="App-header">
 
-                <Button variant="outline-light" onClick={() => props.updateNextPage(false)} style={{top: "25px", left: "25px", position: "absolute"}}>&#8592;</Button>
+                <Button variant="outline-light" onClick={() => props.updateNextPage(false)} style={{top: "25px", left: "25px", position: "fixed"}}>&#8592;</Button>
 
                 <h1>Welcome: <code className="h1">[{props.name}]</code></h1>
                 <h1>Select a task </h1>
@@ -76,7 +77,7 @@ export default function TasksPageComponent(props) {
                 <h1>&#8595;</h1>
 
                 <Container>
-                    <Form className="w-50 mx-auto bg-light rounded">
+                    <Form className="w-50 mx-auto bg-light rounded my-3">
                         <Form.Label>
                             <code>[Task]: </code>
                         </Form.Label>

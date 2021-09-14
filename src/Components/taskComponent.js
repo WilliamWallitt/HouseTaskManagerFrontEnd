@@ -29,7 +29,7 @@ export default function TaskComponent(props) {
 
     return (
         <Card className="bg-transparent border-light m-3 p-2 w-25">
-            <Card.Title><h1 className="h3 bg-light p-2 rounded-3" style={{color: "#282c34"}}><code>[Task]: </code>{props.data.name}</h1></Card.Title>
+            <Card.Title><h1 className="lead p-2 rounded-3" style={{color: "#282c34", backgroundColor: "#eeff1f"}}><code>[Task]: </code>{props.data.name}</h1></Card.Title>
             <Card.Text><h1 className="lead border border-light p-1"><code>[Description]: </code>{props.data.description}</h1></Card.Text>
             <Row>
                 <Col>

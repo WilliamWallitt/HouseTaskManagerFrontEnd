@@ -48,7 +48,7 @@ export default function TaskEditComponent(props) {
         <div className="App">
             <header className="App-header">
 
-                <Button variant="outline-light" onClick={() => props.updateEditTask(false)} style={{top: "25px", left: "25px", position: "absolute"}}>&#8592;</Button>
+                <Button variant="outline-light" onClick={() => props.updateEditTask(false)} style={{top: "25px", left: "25px", position: "fixed"}}>&#8592;</Button>
 
                 <Row>
                     <h1>Edit this task</h1>
